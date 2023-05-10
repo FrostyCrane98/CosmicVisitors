@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 746298943}
   - component: {fileID: 746298945}
   - component: {fileID: 746298944}
+  - component: {fileID: 746298946}
   m_Layer: 0
   m_Name: SpaceLimits
   m_TagString: Untagged
@@ -193,6 +194,27 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!50 &746298946
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746298941}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 7
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,10 +309,6 @@ PrefabInstance:
     - target: {fileID: 1137095450975759865, guid: f0eb1da249c31fa418c655979ff01435, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692624595784221715, guid: f0eb1da249c31fa418c655979ff01435, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2067098898453358705, guid: f0eb1da249c31fa418c655979ff01435, type: 3}
       propertyPath: m_RootOrder

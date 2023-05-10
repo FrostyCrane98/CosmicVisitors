@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public InputAction moveAction;
     public InputAction shootAction;
+    Rigidbody2D rb;
 
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
@@ -32,12 +33,17 @@ public class Player : MonoBehaviour
         moveAction.Disable();
     }
 
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     private void Update()
     {
         if (isMoving) 
         {
             Vector2 direction = Vector2.right * input;
-            transform.Translate(direction * moveSpeed * Time.deltaTime);
+            rb.MovePosition( rb.position + direction * moveSpeed * Time.deltaTime);
         }
     }
     private void OnMoveStarted(InputAction.CallbackContext context)

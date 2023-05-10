@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341fcfb8b85d8a34d807e5bdd25faec6, type: 3}
+  m_Name: EasyEnemy
+  m_EditorClassIdentifier: 
+  Health: 1
+  MoveSpeed: 50
+  BulletType: {fileID: 4381129303132779854, guid: 27e4a0ee299a4e649ad5d9ee27c7b4dd, type: 3}
+  Enemyprefab: {fileID: 1137095450975759865, guid: 8ee04e7a1c125024e9c3f8b94c9fe817, type: 3}
