@@ -10,18 +10,27 @@ public class EnemyFactory : MonoBehaviour
 
 
 
-    public GameObject CreateEasyEnemy()
+    public Enemy CreateEasyEnemy()
     {
-        return Instantiate(enemyTypes[0].enemyPrefab,Vector3.zero, Quaternion.identity);
+        GameObject enemyGameObject = Instantiate(enemyTypes[0].enemyPrefab, Vector3.zero, Quaternion.identity);
+        Enemy enemy = enemyGameObject.GetComponent<Enemy>();
+        enemy.Setup(enemyTypes[0]);
+        return enemy;
     }
 
-    public GameObject CreateMediumEnemy()
+    public Enemy CreateMediumEnemy()
     {
-        return Instantiate(enemyTypes[1].enemyPrefab,Vector3.zero, Quaternion.identity);
+        GameObject enemyGameObject = Instantiate(enemyTypes[1].enemyPrefab, Vector3.zero, Quaternion.identity);
+        Enemy enemy = enemyGameObject.GetComponent<Enemy>();
+        enemy.Setup(enemyTypes[1]);
+        return enemy;
     }
     
-    public GameObject CreateHardEnemy()
+    public Enemy CreateHardEnemy()
     {
-        return Instantiate(enemyTypes[2].enemyPrefab,Vector3.zero,Quaternion.identity); 
+        GameObject enemyGameObject = Instantiate(enemyTypes[2].enemyPrefab, Vector3.zero, Quaternion.identity);
+        Enemy enemy = enemyGameObject.GetComponent<Enemy>();
+        enemy.Setup(enemyTypes[2]);
+        return enemy;
     }
 }

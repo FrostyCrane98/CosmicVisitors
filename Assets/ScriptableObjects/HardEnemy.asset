@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341fcfb8b85d8a34d807e5bdd25faec6, type: 3}
   m_Name: HardEnemy
   m_EditorClassIdentifier: 
-  Health: 3
-  bulletshots: 3
-  BulletType: {fileID: 4381129303132779854, guid: 27e4a0ee299a4e649ad5d9ee27c7b4dd, type: 3}
-  Enemyprefab: {fileID: 1137095450975759865, guid: eb7eac1ee6d978f48a4fb5b2005e7a85, type: 3}
+  health: 3
+  bulletShots: 1
+  bulletType: {fileID: 4381129303132779854, guid: 27e4a0ee299a4e649ad5d9ee27c7b4dd, type: 3}
+  enemyPrefab: {fileID: 1137095450975759865, guid: eb7eac1ee6d978f48a4fb5b2005e7a85, type: 3}

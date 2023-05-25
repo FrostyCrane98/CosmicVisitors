@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public InputAction moveAction;
     public InputAction shootAction;
@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     private bool isMoving;
     private float input;
+
+    private int health = 10;
+    private Enemy enemy;
 
     private void OnEnable()
     {
@@ -38,14 +41,16 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (isMoving) 
         {
             Vector2 direction = Vector2.right * input;
-            rb.MovePosition( rb.position + direction * moveSpeed * Time.deltaTime);
+            rb.MovePosition( rb.position + direction * moveSpeed * Time.fixedDeltaTime);
         }
     }
+
+
     private void OnMoveStarted(InputAction.CallbackContext context)
     {
         isMoving = true;
@@ -61,6 +66,21 @@ public class Player : MonoBehaviour
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        Instantiate(bulletPrefab,bulletSpawn.position, Quaternion.identity);
+        Instantiate(bulletPrefab,bulletSpawn.position, Quaternion.identity).layer = LayerMask.NameToLayer("PlayerBullet");
+    }
+
+    public void OnDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    public void OnDamageTaken(int _damage)
+    {
+        health -= _damage;
+        if (health <= 0)
+        {
+            OnDeath();
+        }
+
     }
 }

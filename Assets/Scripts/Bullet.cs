@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 {
     private Vector2 direction = Vector2.up;
     public float bulletSpeed;
+    public int Damage;
     Rigidbody2D rb;
     
 
@@ -24,6 +25,11 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject, 0.5f);
+        IDamageable damageableObject = (IDamageable)collision.collider.gameObject.GetComponent(typeof(IDamageable));
+        if (damageableObject != null)
+        {
+            damageableObject.OnDamageTaken(Damage);
+        }
+            Destroy(gameObject);
     }
 }

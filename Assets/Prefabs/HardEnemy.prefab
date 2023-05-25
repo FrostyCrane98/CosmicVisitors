@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 2067098898453358705}
   - component: {fileID: 3795851740433699010}
   - component: {fileID: 1346485687730267613}
-  - component: {fileID: -2670636601066107074}
-  m_Layer: 0
-  m_Name: MediumEnemy
+  - component: {fileID: 5853200812050485453}
+  - component: {fileID: 5052748995767471692}
+  - component: {fileID: 6088244955243489531}
+  m_Layer: 7
+  m_Name: HardEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d4cc7048cf92c3a41a960f1c14ca4425, type: 2}
+  - {fileID: 2100000, guid: 04b808761dc0d1748b675cef7dd601d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!61 &-2670636601066107074
+--- !u!61 &5853200812050485453
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,3 +112,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5052748995767471692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137095450975759865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54dc48d348ae25d44b6cb2dbd622bdb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrototype: {fileID: 11400000, guid: 41bc14b7471e66546b734efd00123edf, type: 2}
+--- !u!50 &6088244955243489531
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137095450975759865}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
