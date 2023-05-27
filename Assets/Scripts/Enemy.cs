@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public int InitialHealth;
     public int Health;
+    public Vector2Int PositionInGrid;
 
 
 
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void OnDeath()
     {
         Destroy(gameObject);
+        EventManager.Instance.EnemyDeath(this);
     }
 
     public void Setup(EnemyPrototype _prototype)

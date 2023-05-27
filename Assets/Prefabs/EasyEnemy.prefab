@@ -124,7 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54dc48d348ae25d44b6cb2dbd622bdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrototype: {fileID: 11400000, guid: b4052dd99a9ff3b46a3515e597033eff, type: 2}
+  InitialHealth: 0
+  Health: 0
+  PositionInGrid: {x: 0, y: 0}
 --- !u!50 &-3923745442203907310
 Rigidbody2D:
   serializedVersion: 4
@@ -145,4 +147,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
