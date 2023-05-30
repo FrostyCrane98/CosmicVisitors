@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public int InitialHealth;
     public int Health;
     public Vector2Int PositionInGrid;
+    public GameObject BulletPrefab;
 
 
 
@@ -27,7 +28,12 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Setup(EnemyPrototype _prototype)
     {
-        InitialHealth = _prototype.health;
-        Health = _prototype.health;
+        InitialHealth = _prototype.Health;
+        Health = _prototype.Health;
+    }
+
+    public void Shoot()
+    {
+        Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), Quaternion.identity).layer = LayerMask.NameToLayer("EnemyBullet");
     }
 }

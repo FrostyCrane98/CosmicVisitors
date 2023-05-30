@@ -5,32 +5,32 @@ using UnityEngine;
 public class EnemyFactory : MonoBehaviour
 
 {
-    public EnemyPrototype[] enemyTypes = new EnemyPrototype[3];
+    public EnemyPrototype[] EnemyTypes = new EnemyPrototype[3];
 
 
 
 
     public Enemy CreateEasyEnemy()
     {
-        GameObject enemyGameObject = Instantiate(enemyTypes[0].enemyPrefab, Vector3.zero, Quaternion.identity);
+        GameObject enemyGameObject = Instantiate(EnemyTypes[0].EnemyPrefab, Vector3.zero, Quaternion.identity);
         Enemy enemy = enemyGameObject.GetComponent<Enemy>();
-        enemy.Setup(enemyTypes[0]);
+        enemy.Setup(EnemyTypes[0]);
         return enemy;
     }
 
     public Enemy CreateMediumEnemy()
     {
-        GameObject enemyGameObject = Instantiate(enemyTypes[1].enemyPrefab, Vector3.zero, Quaternion.identity);
+        GameObject enemyGameObject = Instantiate(EnemyTypes[1].EnemyPrefab, Vector3.zero, Quaternion.identity);
         Enemy enemy = enemyGameObject.GetComponent<Enemy>();
-        enemy.Setup(enemyTypes[1]);
+        enemy.Setup(EnemyTypes[1]);
         return enemy;
     }
     
     public Enemy CreateHardEnemy()
     {
-        GameObject enemyGameObject = Instantiate(enemyTypes[2].enemyPrefab, Vector3.zero, Quaternion.identity);
+        GameObject enemyGameObject = Instantiate(EnemyTypes[2].EnemyPrefab, Vector3.zero, Quaternion.identity);
         Enemy enemy = enemyGameObject.GetComponent<Enemy>();
-        enemy.Setup(enemyTypes[2]);
+        enemy.Setup(EnemyTypes[2]);
         return enemy;
     }
 }

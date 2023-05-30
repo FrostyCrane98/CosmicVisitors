@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
-    private Vector2 direction = Vector2.up;
-    public float bulletSpeed;
+    public float BulletSpeed;
     public int Damage;
+    public Vector2 direction = Vector2.up;
     Rigidbody2D rb;
     
 
@@ -20,12 +20,12 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + direction * bulletSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + direction * BulletSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        IDamageable damageableObject = (IDamageable)collision.collider.gameObject.GetComponent(typeof(IDamageable));
+        IDamageable damageableObject = (IDamageable)collider.gameObject.GetComponent(typeof(IDamageable));
         if (damageableObject != null)
         {
             damageableObject.OnDamageTaken(Damage);

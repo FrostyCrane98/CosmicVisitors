@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -11,11 +12,13 @@ public class EnemyController : MonoBehaviour
     private int enemiesToSpawn = 30;
     private Grid grid;
 
-    Rigidbody2D collectionRigidBody;
-    private float MoveSpeed = 3f;
-    private Vector2 MoveDirection = Vector2.left;
+    public Rigidbody2D collectionRigidBody;
+    private float moveSpeed = 1.5f;
+    private Vector2 moveDirection = Vector2.left;
     private bool isDescending = false;
-
+    private int numberOfEnemiesShooting = 8;
+    private float attackRate = 2f;
+    private float LastAttackTime = 0;
     private List<Enemy> enemies = new List<Enemy>();
 
     private BoxCollider2D enemyCollectionCollider;
@@ -23,11 +26,13 @@ public class EnemyController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Instance.OnEnemyDeath += OnEnemyDeath;
+        EventManager.Instance.OnCollectionCollision += OnCollectionCollision;
     }
 
     private void OnDisable()
     {
         EventManager.Instance.OnEnemyDeath -= OnEnemyDeath;
+        EventManager.Instance.OnCollectionCollision -= OnCollectionCollision;
     }
 
     private void Start()
@@ -37,30 +42,21 @@ public class EnemyController : MonoBehaviour
         enemyCollectionCollider = GetComponentInChildren<BoxCollider2D>();
         enemyCollectionCollider.size = new Vector2(grid.GridLength, grid.GridHeight);
         enemyCollectionCollider.offset = new Vector2(grid.GridLength/2 - grid.CellLength/2, -grid.GridHeight/2 - -grid.CellHeight/2);
-        collectionRigidBody = GetComponentInChildren<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
         if (!isDescending)
         {
-            collectionRigidBody.MovePosition(collectionRigidBody.position + MoveDirection * MoveSpeed * Time.fixedDeltaTime);
+            collectionRigidBody.MovePosition(collectionRigidBody.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
 
-    }
+        if (Time.time - LastAttackTime > attackRate)
+        {
+            LastAttackTime = Time.time;
+            EnemiesShoot(numberOfEnemiesShooting);
+        }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision Detected");
-        isDescending = true;
-        Descend();
-        MoveDirection = -MoveDirection;
-        isDescending = true;       
-    }
-
-    private void Descend()
-    {
-        collectionRigidBody.MovePosition(collectionRigidBody.position + Vector2.down * MoveSpeed * Time.fixedDeltaTime);
     }
 
     private void SpawnEnemies()
@@ -106,11 +102,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnEnemyDeath(Enemy enemy)
-    {
-        enemies.Remove(enemy);
-        AdaptGroupCollider();
-    }
 
 
     private void AdaptGroupCollider()
@@ -145,6 +136,47 @@ public class EnemyController : MonoBehaviour
         if (MinXValue != 0)
         {
             enemyCollectionCollider.offset = new Vector2(enemyCollectionCollider.offset.x + grid.CellLength * MinXValue, enemyCollectionCollider.offset.y);
+        }
+    }
+
+    public void EnemiesShoot(int _numberOfEnemies)
+    {
+        if (enemies.Count < _numberOfEnemies)
+        {
+            _numberOfEnemies = enemies.Count;
+        }
+        for (int i = 1; i < _numberOfEnemies; i++)
+        {
+            int enemyShooting = Random.Range(0, enemies.Count);
+            enemies[enemyShooting].Shoot();
+        }
+    }
+
+    public void TakeDown()
+    {
+        numberOfEnemiesShooting = enemies.Count;
+        attackRate = 0.3f;
+    }
+
+    private void OnEnemyDeath(Enemy enemy)
+    {
+        enemies.Remove(enemy);
+        AdaptGroupCollider();
+    }
+
+    private void OnCollectionCollision()
+    {
+        isDescending = true;
+        collectionRigidBody.transform.position = new Vector2(collectionRigidBody.position.x, collectionRigidBody.position.y -0.5f);
+        moveDirection = -moveDirection;
+        isDescending = false;
+
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.transform.position.y <= -0.5)
+            {
+                TakeDown();
+            }
         }
     }
 }

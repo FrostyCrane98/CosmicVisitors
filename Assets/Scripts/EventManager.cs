@@ -18,15 +18,21 @@ public class EventManager
             return instance;
         }
     }
+    public event Action<Enemy> OnEnemyDeath;
+    public event Action OnCollectionCollision;
+   
     private EventManager()
     {
     }
 
-    public event Action<Enemy> OnEnemyDeath;
-
     public void EnemyDeath(Enemy _enemy)
     {
         OnEnemyDeath?.Invoke(_enemy);
+    }
+
+    public void CollectionCollision()
+    {
+        OnCollectionCollision?.Invoke();
     }
 
 }

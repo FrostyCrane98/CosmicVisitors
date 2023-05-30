@@ -6,39 +6,48 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    public InputAction moveAction;
-    public InputAction shootAction;
-    Rigidbody2D rb;
+    public InputAction MoveAction;
+    public InputAction ShootAction;
+    public Transform Ship;
+    private Rigidbody2D rb;
+    private Quaternion baseRotation;
+    private Quaternion RotationSpeed;
+    private Quaternion MaxRotation;
 
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public float moveSpeed;
+
+    public GameObject BulletPrefab;
+    public Transform BulletSpawn;
+    public float MoveSpeed;
+    private int initialHealth = 10;
+    private int currentHealth;
+    private Vector2 SpawnPosition;
     private bool isMoving;
     private float input;
 
-    private int health = 10;
     private Enemy enemy;
 
     private void OnEnable()
     {
-        moveAction.Enable();
-        shootAction.Enable();
-        shootAction.started += OnShoot;
-        moveAction.started += OnMoveStarted;
-        moveAction.canceled += OnMoveEnded;
+        MoveAction.Enable();
+        ShootAction.Enable();
+        ShootAction.started += OnShoot;
+        MoveAction.started += OnMoveStarted;
+        MoveAction.canceled += OnMoveEnded;
     }
 
     private void OnDisable()
     {
-        moveAction.started -= OnMoveStarted;
-        shootAction.started -= OnShoot;
-        moveAction.canceled -= OnMoveEnded;
-        moveAction.Disable();
+        MoveAction.started -= OnMoveStarted;
+        ShootAction.started -= OnShoot;
+        MoveAction.canceled -= OnMoveEnded;
+        MoveAction.Disable();
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentHealth = initialHealth;
+        SpawnPosition = transform.position;
     }
 
     private void FixedUpdate()
@@ -46,7 +55,7 @@ public class Player : MonoBehaviour, IDamageable
         if (isMoving) 
         {
             Vector2 direction = Vector2.right * input;
-            rb.MovePosition( rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition( rb.position + direction * MoveSpeed * Time.fixedDeltaTime); 
         }
     }
 
@@ -66,7 +75,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        Instantiate(bulletPrefab,bulletSpawn.position, Quaternion.identity).layer = LayerMask.NameToLayer("PlayerBullet");
+        Instantiate(BulletPrefab,BulletSpawn.position, Quaternion.identity).layer = LayerMask.NameToLayer("PlayerBullet");
     }
 
     public void OnDeath()
@@ -76,11 +85,16 @@ public class Player : MonoBehaviour, IDamageable
 
     public void OnDamageTaken(int _damage)
     {
-        health -= _damage;
-        if (health <= 0)
+        currentHealth -= _damage;
+        if (currentHealth <= 0)
         {
             OnDeath();
         }
+    }
 
+    public void ResetPlayer()
+    {
+        currentHealth = initialHealth;
+        transform.position = SpawnPosition;
     }
 }
