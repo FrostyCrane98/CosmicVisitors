@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     private Grid grid;
 
     public Rigidbody2D collectionRigidBody;
+    private Vector2 InitialCollectionPosition;
     private float moveSpeed = 1.5f;
     private Vector2 moveDirection = Vector2.left;
     private bool isDescending = false;
@@ -41,7 +42,8 @@ public class EnemyController : MonoBehaviour
         SpawnEnemies();
         enemyCollectionCollider = GetComponentInChildren<BoxCollider2D>();
         enemyCollectionCollider.size = new Vector2(grid.GridLength, grid.GridHeight);
-        enemyCollectionCollider.offset = new Vector2(grid.GridLength/2 - grid.CellLength/2, -grid.GridHeight/2 - -grid.CellHeight/2);
+        enemyCollectionCollider.offset = new Vector2(grid.GridLength / 2 - grid.CellLength / 2, -grid.GridHeight / 2 - -grid.CellHeight / 2);
+        InitialCollectionPosition = collectionRigidBody.position;
     }
 
     private void FixedUpdate()
@@ -94,7 +96,7 @@ public class EnemyController : MonoBehaviour
 
         foreach (Enemy enemy in enemies)
         {
-            
+
             Cell cell = positions[Random.Range(0, positions.Count)];
             enemy.transform.position = cell.Position;
             enemy.PositionInGrid = cell.PositionInGrid;
@@ -145,7 +147,7 @@ public class EnemyController : MonoBehaviour
         {
             _numberOfEnemies = enemies.Count;
         }
-        for (int i = 1; i < _numberOfEnemies; i++)
+        for (int i = 1; i <= _numberOfEnemies; i++)
         {
             int enemyShooting = Random.Range(0, enemies.Count);
             enemies[enemyShooting].Shoot();
@@ -155,19 +157,23 @@ public class EnemyController : MonoBehaviour
     public void TakeDown()
     {
         numberOfEnemiesShooting = enemies.Count;
-        attackRate = 0.3f;
+        attackRate = 0.2f;
     }
 
     private void OnEnemyDeath(Enemy enemy)
     {
         enemies.Remove(enemy);
+        if (enemies.Count == 0)
+        {
+            EventManager.Instance.StageClear();
+        }
         AdaptGroupCollider();
     }
 
     private void OnCollectionCollision()
     {
         isDescending = true;
-        collectionRigidBody.transform.position = new Vector2(collectionRigidBody.position.x, collectionRigidBody.position.y -0.5f);
+        collectionRigidBody.transform.position = new Vector2(collectionRigidBody.position.x, collectionRigidBody.position.y - 0.5f);
         moveDirection = -moveDirection;
         isDescending = false;
 
@@ -179,4 +185,21 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+
+    public void ResetEnemies()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemies.Clear();
+        collectionRigidBody.position = InitialCollectionPosition;
+        SpawnEnemies();
+        Vector2 moveDirection = Vector2.left;
+        isDescending = false;
+        numberOfEnemiesShooting = 8;
+        attackRate = 2f;
+    }
 }
+
+

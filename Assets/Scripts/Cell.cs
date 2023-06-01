@@ -10,13 +10,13 @@ public class Cell : MonoBehaviour
     public Vector2 Position
     { get { return transform.position; } }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawLine(new Vector2(Position.x - Length / 2, Position.y - Height / 2), new Vector2(Position.x + Length / 2, Position.y - Height / 2));
-    //    Gizmos.DrawLine(new Vector2(Position.x + Length / 2, Position.y - Height / 2), new Vector2(Position.x + Length / 2, Position.y + Height / 2));
-    //    Gizmos.DrawLine(new Vector2(Position.x + Length / 2, Position.y + Height / 2), new Vector2(Position.x - Length / 2, Position.y + Height / 2));
-    //    Gizmos.DrawLine(new Vector2(Position.x - Length / 2, Position.y + Height / 2), new Vector2(Position.x - Length / 2, Position.y - Height / 2));
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(new Vector2(Position.x - Length / 2, Position.y - Height / 2), new Vector2(Position.x + Length / 2, Position.y - Height / 2));
+        Gizmos.DrawLine(new Vector2(Position.x + Length / 2, Position.y - Height / 2), new Vector2(Position.x + Length / 2, Position.y + Height / 2));
+        Gizmos.DrawLine(new Vector2(Position.x + Length / 2, Position.y + Height / 2), new Vector2(Position.x - Length / 2, Position.y + Height / 2));
+        Gizmos.DrawLine(new Vector2(Position.x - Length / 2, Position.y + Height / 2), new Vector2(Position.x - Length / 2, Position.y - Height / 2));
 
-    //}
+    }
 }

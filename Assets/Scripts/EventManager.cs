@@ -20,6 +20,8 @@ public class EventManager
     }
     public event Action<Enemy> OnEnemyDeath;
     public event Action OnCollectionCollision;
+    public event Action OnPlayerDeath;
+    public event Action OnStageClear;
    
     private EventManager()
     {
@@ -35,4 +37,13 @@ public class EventManager
         OnCollectionCollision?.Invoke();
     }
 
+    public void PlayerDeath()
+    {
+        OnPlayerDeath?.Invoke();
+    }
+
+    public void StageClear()
+    {
+        OnStageClear.Invoke();
+    }
 }

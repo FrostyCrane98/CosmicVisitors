@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341fcfb8b85d8a34d807e5bdd25faec6, type: 3}
   m_Name: MediumEnemy
   m_EditorClassIdentifier: 
-  Health: 1
+  Health: 2
   BulletShots: 1
   BulletType: {fileID: 4381129303132779854, guid: 27e4a0ee299a4e649ad5d9ee27c7b4dd, type: 3}
   EnemyPrefab: {fileID: 1137095450975759865, guid: 53d1b82d24dc6c6479461904f480c40a, type: 3}

@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 {
     public float BulletSpeed;
     public int Damage;
-    public Vector2 direction = Vector2.up;
+    public Vector2 direction;
     Rigidbody2D rb;
     
 

@@ -14,17 +14,13 @@ public class Player : MonoBehaviour, IDamageable
     private Quaternion RotationSpeed;
     private Quaternion MaxRotation;
 
-
     public GameObject BulletPrefab;
     public Transform BulletSpawn;
     public float MoveSpeed;
-    private int initialHealth = 10;
-    private int currentHealth;
-    private Vector2 SpawnPosition;
+    private int Health = 10;
     private bool isMoving;
     private float input;
 
-    private Enemy enemy;
 
     private void OnEnable()
     {
@@ -41,13 +37,12 @@ public class Player : MonoBehaviour, IDamageable
         ShootAction.started -= OnShoot;
         MoveAction.canceled -= OnMoveEnded;
         MoveAction.Disable();
+        ShootAction.Disable();
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = initialHealth;
-        SpawnPosition = transform.position;
     }
 
     private void FixedUpdate()
@@ -81,20 +76,15 @@ public class Player : MonoBehaviour, IDamageable
     public void OnDeath()
     {
         Destroy(gameObject);
+        EventManager.Instance.PlayerDeath();
     }
 
     public void OnDamageTaken(int _damage)
     {
-        currentHealth -= _damage;
-        if (currentHealth <= 0)
+        Health -= _damage;
+        if (Health <= 0)
         {
             OnDeath();
         }
-    }
-
-    public void ResetPlayer()
-    {
-        currentHealth = initialHealth;
-        transform.position = SpawnPosition;
     }
 }
