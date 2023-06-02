@@ -11,12 +11,14 @@ public class GameController : MonoBehaviour
     public AudioPlayer AudioPlayer;
     public PlayerManager PlayerManager;
     public BulletManager BulletManager;
+    public Background Background;
 
     public InputAction PauseAction;
 
     public AudioClip TitleOst;
     public AudioClip WinOst;
     public AudioClip GameOverOst;
+    public AudioClip InGameOst;
     private enum eGameState
     {
         TitleScreen,
@@ -68,30 +70,33 @@ public class GameController : MonoBehaviour
                 UIController.PlayerHUD.ResetHealthBar();
                 UIController.DisablePanels();
                 Time.timeScale = 1;
-                State = eGameState.Idle;
+                Background.isPlaying = true;
+                SetIdleState();
                 break;
 
             case eGameState.Pause:
                 Time.timeScale = 0;
+                Background.isPlaying = false;
                 UIController.DisablePanels();
                 UIController.EnablePausePanel();
-                AudioPlayer.Pause();
                 break;
 
             case eGameState.Resume:
-                UIController.DisablePanels();
                 Time.timeScale = 1;
-                AudioPlayer.Resume();
-                State = eGameState.Idle;
+                Background.isPlaying = true;
+                UIController.DisablePanels();
+                SetIdleState();
                 break;
 
             case eGameState.Win:
                 Time.timeScale = 0;
+                Background.isPlaying = false;
                 UIController.EnableWinPanel();
                 break;
 
             case eGameState.GameOver:
                 Time.timeScale = 0;
+                Background.isPlaying = false;
                 UIController.EnableGameOverPanel();
                 break;
         
@@ -121,10 +126,12 @@ public class GameController : MonoBehaviour
     {
         if (State == eGameState.Idle)
         {
+            AudioPlayer.Pause();
             State = eGameState.Pause;
         }
         else if (State == eGameState.Pause)
         {
+            AudioPlayer.Resume();
             State = eGameState.Resume;
         }
     }
@@ -134,6 +141,12 @@ public class GameController : MonoBehaviour
         AudioPlayer.ToggleLoop(true);
         AudioPlayer.Play(TitleOst);
         State = eGameState.TitleScreen;
+    }
+
+    private void SetIdleState()
+    {
+        AudioPlayer.Play(InGameOst);
+        State = eGameState.Idle;
     }
 
     private void OnPlayerDeath()
@@ -149,4 +162,5 @@ public class GameController : MonoBehaviour
         AudioPlayer.Play(WinOst);
         State = eGameState.Win;
     }
+
 }

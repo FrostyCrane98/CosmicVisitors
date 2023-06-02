@@ -11,16 +11,21 @@ public class EnemyController : MonoBehaviour
     private float mediumEnemyProb = 30;
     private int enemiesToSpawn = 30;
     private Grid grid;
+    
+    private List<Enemy> enemies = new List<Enemy>();
 
     public Rigidbody2D collectionRigidBody;
     private Vector2 InitialCollectionPosition;
-    private float moveSpeed = 1.5f;
     private Vector2 moveDirection = Vector2.left;
+    private float moveSpeed = 1.5f;
     private bool isDescending = false;
+    private float minHeight = -0.5f;
+    bool isOnMinHeight = false;
+
     private int numberOfEnemiesShooting = 8;
     private float attackRate = 2f;
     private float LastAttackTime = 0;
-    private List<Enemy> enemies = new List<Enemy>();
+    
 
     private BoxCollider2D enemyCollectionCollider;
 
@@ -171,19 +176,29 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollectionCollision()
     {
-        isDescending = true;
-        collectionRigidBody.transform.position = new Vector2(collectionRigidBody.position.x, collectionRigidBody.position.y - 0.5f);
-        moveDirection = -moveDirection;
-        isDescending = false;
-
-        foreach (Enemy enemy in enemies)
+        if (!isOnMinHeight)
         {
-            if (enemy.transform.position.y <= -0.5)
+            isDescending = true;
+            collectionRigidBody.transform.position = new Vector2(collectionRigidBody.position.x, collectionRigidBody.position.y - 0.5f);
+            moveDirection = -moveDirection;
+            isDescending = false;
+
+            foreach (Enemy enemy in enemies)
             {
-                TakeDown();
+                if (enemy.transform.position.y <= minHeight)
+                {
+                    isOnMinHeight = true;
+                    TakeDown();
+                }
             }
         }
+        else
+        {
+            moveDirection = -moveDirection;
+        }
     }
+
+
 
     public void ResetEnemies()
     {
@@ -192,8 +207,8 @@ public class EnemyController : MonoBehaviour
             Destroy(enemy.gameObject);
         }
         enemies.Clear();
-        collectionRigidBody.position = InitialCollectionPosition;
         SpawnEnemies();
+        collectionRigidBody.position = InitialCollectionPosition;
         Vector2 moveDirection = Vector2.left;
         isDescending = false;
         numberOfEnemiesShooting = 8;

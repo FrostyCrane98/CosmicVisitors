@@ -24,7 +24,7 @@ public class AudioPlayer : MonoBehaviour
 
     public void Resume()
     {
-        source.Play();
+        source.UnPause();
     }
 
     public void Stop(AudioClip _clip)
