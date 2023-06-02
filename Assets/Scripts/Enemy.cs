@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Shoot()
     {
-        Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), Quaternion.identity).layer = LayerMask.NameToLayer("EnemyBullet");
+        GameObject createdBullet;
+        createdBullet = Instantiate(BulletPrefab, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), Quaternion.identity);
+        createdBullet.layer = LayerMask.NameToLayer("EnemyBullet");
+        EventManager.Instance.BulletShoot(createdBullet);
     }
 }

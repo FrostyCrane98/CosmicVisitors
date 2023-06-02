@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class EventManager 
 {
@@ -22,6 +23,8 @@ public class EventManager
     public event Action OnCollectionCollision;
     public event Action OnPlayerDeath;
     public event Action OnStageClear;
+    public event Action<int> OnPlayerHit;
+    public event Action<GameObject> OnBulletShoot;
    
     private EventManager()
     {
@@ -44,6 +47,16 @@ public class EventManager
 
     public void StageClear()
     {
-        OnStageClear.Invoke();
+        OnStageClear?.Invoke();
+    }
+
+    public void PlayerHit(int _currenthealth)
+    {
+        OnPlayerHit?.Invoke(_currenthealth);
+    }
+
+    public void BulletShoot(GameObject _spawnedbullet)
+    {
+        OnBulletShoot?.Invoke(_spawnedbullet);
     }
 }

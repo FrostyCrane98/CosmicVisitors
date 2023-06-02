@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,19 @@ public class UIController : MonoBehaviour
     public GameObject PausePanel;
     public GameObject WinPanel;
     public GameObject GameOverPanel;
+    public PlayerHUD PlayerHUD;
 
+
+    private void OnEnable()
+    {
+        EventManager.Instance.OnPlayerHit += OnPlayerHit;
+
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.OnPlayerHit -= OnPlayerHit;
+    }
     public void DisablePanels()
     {
         TitlePanel.SetActive(false);
@@ -39,5 +52,10 @@ public class UIController : MonoBehaviour
     {
         DisablePanels();
         GameOverPanel.SetActive(true);
+    }
+
+    public void OnPlayerHit(int health)
+    {
+        PlayerHUD.UpdateHealthBar(health);
     }
 }

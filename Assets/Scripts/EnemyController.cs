@@ -96,7 +96,6 @@ public class EnemyController : MonoBehaviour
 
         foreach (Enemy enemy in enemies)
         {
-
             Cell cell = positions[Random.Range(0, positions.Count)];
             enemy.transform.position = cell.Position;
             enemy.PositionInGrid = cell.PositionInGrid;

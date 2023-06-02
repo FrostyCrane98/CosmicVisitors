@@ -8,19 +8,20 @@ public class Bullet : MonoBehaviour
 {
     public float BulletSpeed;
     public int Damage;
-    public Vector2 direction;
-    Rigidbody2D rb;
+    public Vector2 Direction;
+    private Rigidbody2D rigidBody;
     
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
+
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + direction * BulletSpeed * Time.deltaTime);
+        rigidBody.MovePosition(rigidBody.position + Direction * BulletSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -30,6 +31,6 @@ public class Bullet : MonoBehaviour
         {
             damageableObject.OnDamageTaken(Damage);
         }
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

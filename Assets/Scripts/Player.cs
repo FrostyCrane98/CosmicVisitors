@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
 {
     public InputAction MoveAction;
     public InputAction ShootAction;
+
     public Transform Ship;
     private Rigidbody2D rb;
     private Quaternion baseRotation;
@@ -16,11 +17,11 @@ public class Player : MonoBehaviour, IDamageable
 
     public GameObject BulletPrefab;
     public Transform BulletSpawn;
+
     public float MoveSpeed;
     private int Health = 10;
     private bool isMoving;
     private float input;
-
 
     private void OnEnable()
     {
@@ -59,7 +60,6 @@ public class Player : MonoBehaviour, IDamageable
     {
         isMoving = true;
         input = context.ReadValue<float>();
-
     }
 
     private void OnMoveEnded(InputAction.CallbackContext context)
@@ -70,7 +70,10 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        Instantiate(BulletPrefab,BulletSpawn.position, Quaternion.identity).layer = LayerMask.NameToLayer("PlayerBullet");
+        GameObject createdBullet;
+        createdBullet = Instantiate(BulletPrefab,BulletSpawn.position, Quaternion.identity);
+        createdBullet.layer = LayerMask.NameToLayer("PlayerBullet");
+        EventManager.Instance.BulletShoot(createdBullet);
     }
 
     public void OnDeath()
@@ -82,6 +85,7 @@ public class Player : MonoBehaviour, IDamageable
     public void OnDamageTaken(int _damage)
     {
         Health -= _damage;
+        EventManager.Instance.PlayerHit(Health);
         if (Health <= 0)
         {
             OnDeath();

@@ -7,6 +7,6 @@ public class EnemyPrototype : ScriptableObject
 {
     public int Health = 1;
     public int BulletShots = 1;
-    public Bullet BulletType;
+    public BulletManager BulletType;
     public GameObject EnemyPrefab;
 }

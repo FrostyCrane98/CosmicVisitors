@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public UIController UIController;
     public AudioPlayer AudioPlayer;
     public PlayerManager PlayerManager;
+    public BulletManager BulletManager;
 
     public InputAction PauseAction;
 
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour
         PauseAction.Disable();
         PauseAction.started -= TogglePause;
         EventManager.Instance.OnPlayerDeath -= OnPlayerDeath;
+        EventManager.Instance.OnStageClear -= OnStageClear;
     }
 
     private void Start()
@@ -60,8 +62,10 @@ public class GameController : MonoBehaviour
                 break;
         
             case eGameState.Start:
-                PlayerManager.SpawnNewPlayer();
+                BulletManager.ClearBullets();
                 EnemyController.ResetEnemies();
+                PlayerManager.SpawnNewPlayer();
+                UIController.PlayerHUD.ResetHealthBar();
                 UIController.DisablePanels();
                 Time.timeScale = 1;
                 State = eGameState.Idle;
