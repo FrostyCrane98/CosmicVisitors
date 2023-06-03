@@ -12,3 +12,4 @@ HOW TO PLAY :
 A - Move left
 D - Move right
 Spacebar - Fire
+Esc - Toggle pause
